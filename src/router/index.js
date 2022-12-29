@@ -14,7 +14,7 @@ const router = createRouter({
         {
             path: '/users',
             name: 'AfterSales',
-            component: () => import(/*webapckChunkName: 'AfterSales' */'@/views/login/index.vue')
+            component: () => import(/*webapckChunkName: 'AfterSales' */'../views/users/index.vue')
         }
     ]
 })

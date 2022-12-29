@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col :span="4" class="menu-left">
+    <el-col :span="5" class="menu-left">
       <div class="left-header">
         <div>Nothing Dianostic Tool</div>
       </div>
@@ -21,7 +21,7 @@
         </div>
       </div>
     </el-col>
-    <el-col :span="20" class="menu-right">
+    <el-col :span="19" class="menu-right">
       <router-view />
     </el-col>
   </el-row>
@@ -44,6 +44,8 @@
     align-items: center;
     display: flex;
     justify-content: center;
+    font-size: 24px;
+    text-align: center;
   }
   .left-center {
     flex: 3;

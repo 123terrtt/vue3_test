@@ -1,49 +1,40 @@
+//1：研发人员 2：测试人员  3：admin
+
+// 用户类型
 export const USERTYPE = {
-    ADMIN: { text: 'admin', type: 3},
-    RD: { text: 'R&D', type: 2},
-    AfterSales: { text: 'AfterSales', type: 1}
-}
-
-export const DEVICE = {
-    nothingx: 'Nothingx',
-    ear1: 'ear (1)',
-    earStick: 'ear (Stick)'
-}
-
-const loginInfo = JSON.parse(localStorage.getItem('logininfo'));
-const { type } = loginInfo ? loginInfo : '';
-
-let menulist = [];
-if (type === '3') {
-    menulist = [
-       {
-           menu: 'users',
-           subMenu: [
-            { menu: 'AfterSales', path: '/users'},
-            { menu: 'R&D', path: '/users'},
-           ]
-       },
-       {
-            menu: 'device',
-            subMenu: [
-                { menu: 'nothingx', path: '/device'},
-                { menu: 'ear (1)', path: '/device'},
-                { menu: 'ear (Stick)', path: '/device'}
-            ]
-        }
-    ]
-} else if (type === '1' || type === '2'){
-    menulist = [
-        {
-            menu: 'device',
-            subMenu: [
-                { menu: 'nothingx', path: '/device'},
-                { menu: 'ear (1)', path: '/device'},
-                { menu: 'ear (Stick)', path: '/device'}
-            ]
-        }
-    ]
-} else {
-    menulist = [];
-}
-export const MENULIST = menulist
+    AfterSales: { text: 'After Sales', type: 2},
+    RD: { text: 'R&D', type: 1},
+    Admin: { text: 'Admin', type: 3}
+  }
+  // 设备类型
+  export const DEVICETYPE = {
+    EarStick: 'Ear Stick',
+    Ear1: 'Nothing Ear (1)',
+    Ear2: 'Ear (2)',
+    JV: 'JV'
+  }
+  export const USERSTATUS = [
+    { text: 'active', code: 0},
+    { text: 'in Active', code: 1}
+  ]
+  export const MENULIST = [
+    {
+      menu: 'Users',
+      subMenu: [
+        {menuItem: 'After Sales', path: '/usersList'}, 
+        {menuItem: 'R&D', path: '/usersList'}
+      ],
+      showMenuMap: [3], //对于哪类登录人员可展示
+    },
+    {
+      menu: 'Devices', 
+      subMenu: [
+        {menuItem: 'Ear Stick', path: '/device'}, 
+        {menuItem: 'Nothing Ear (1)', path: '/device'},
+        {menuItem: 'Ear (2)', path: '/device'}, 
+        {menuItem: 'JV', path: '/device'},
+      ],
+      showMenuMap: [1, 2, 3],
+    },
+  ]
+  
