@@ -6,12 +6,13 @@
       </div>
       <div class="left-center">
         <el-menu
-        active-text-color="#ffd04b"
+        default-active="1"
+        active-text-color="#409eff"
         background-color="#545c64"
         text-color="#fff"
         >
-          <el-menu-item-group :title="item.menu" v-for="(item) in menulist" :key="item.menu">
-            <el-menu-item :index="subItem.menu" v-for="(subItem) in item.subMenu" :key="subItem.menu">{{ subItem.menu }}</el-menu-item>
+          <el-menu-item-group :title="item.menu" v-for="(item, index) in menulist" :key="item.menu" :index="index">
+            <el-menu-item :index="subItem.menuItem" v-for="(subItem, subIndex) in item.subMenu" :key="subItem.menuItem">{{ subItem.menuItem }}</el-menu-item>
           </el-menu-item-group>
         </el-menu>
       </div>
@@ -60,11 +61,11 @@
   
 </style>
 
-<script setup>
+<script lang="ts" setup>
   import { reactive } from 'vue'
-  import { MENULIST } from '@/utils/constant.js'
+  import { MENULIST } from './utils/constant.js'
 
-  const menulist = reactive({
+  const menulist = reactive(
     MENULIST,
-  })
+  )
 </script>

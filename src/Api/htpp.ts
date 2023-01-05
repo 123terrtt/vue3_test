@@ -1,16 +1,19 @@
 import axios  from 'axios';
 
 let baseURL;
-if(process.env.NODE_ENV === 'development') {
+if(import.meta.env.MODE === 'development') {
   baseURL = '';
-} else if (process.env.NODE_ENV === 'production') {
+} else if (import.meta.env.MODE === 'production') {
   baseURL = 'https://3vk8b6ezwa.execute-api.eu-west-3.amazonaws.com/diagnosticTool';
 }
 let instance = axios.create({
   baseURL,
+  timeout: 6 * 1000,
+  withCredentials: true
 })
 // 配置请求拦截
 instance.interceptors.request.use(
+
   config => {
     return config;
   },

@@ -15,7 +15,7 @@
         <el-input type="password" v-model="formCustom.password" />
       </el-form-item>
       <div class="forget-info-wrap">
-        <div class="forget-info">Forget password</div>
+        <div class="forget-info" @click="handleReset">Forget password</div>
       </div>
       <div class="submit_wrap">
         <el-button   @click="handleSubmit(ruleFormRef)" class="submit_btn" type="primary">Continue</el-button>
@@ -31,8 +31,9 @@ import { USERTYPE } from '../../utils/constant';
 import { reactive, ref, onMounted} from 'vue'
 import { userLogin, resetPassword } from '../../Api/api'
 import type { FormInstance } from 'element-plus'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox} from 'element-plus'
 import { useRouter } from "vue-router"
+import { h } from 'vue'
 
 const router = useRouter();
 const labelPosition = ref<String>('top');
@@ -43,15 +44,13 @@ const formCustom = reactive({
   password: '',
 })
 onMounted(() => {
-  console.log('开始执行11111111')
 })
 
 const handleSubmit = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate(async (valid) => {
-    debugger
     if (valid) {
-      let result = await userLogin(formCustom);
+      let result: any = await userLogin(formCustom);
       if (result.code === '200') {
         let { email, type } = result.data;
         let loginInfo = {
@@ -59,7 +58,10 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
           email,
           type
         };
-        ElMessage('Login Successfully!')
+        ElMessage({
+          message: 'Login Successfully!',
+          type: 'success'
+        })
         router.push({
           path: '/usersList',
           query: {
@@ -68,9 +70,50 @@ const handleSubmit = (formEl: FormInstance | undefined) => {
       });
       } else {
         // todo 需要提示具体的错误信息
-        ElMessage('Login Successfully!')
+        ElMessage({
+          message: 'Wrong user name or password',
+          type: 'error'
+        })
       }
     }
+  })
+}
+
+const handleReset = () => {
+  ElMessageBox({
+    title: '',
+    message: h('p', null, [
+      h('span', null, 'Are you sure to reset password')
+    ]),
+    showCancelButton: true,
+    confirmButtonText: 'YES',
+    cancelButtonText: 'NO',
+    beforeClose: async (action, instance, done) => {
+      if (action === 'confirm') {
+        instance.confirmButtonLoading = true
+        const { Email } = formCustom;
+        const result: any = await resetPassword(Email);
+        instance.confirmButtonLoading = false
+        const { code } = result;
+        if (code === '200') {
+          done()
+          ElMessageBox({
+            title: 'Notice',
+            message: h('p', null, [
+              h('span', null, 'Please check your eamil for new password!'),
+            ]),
+          })
+        }  else {
+          ElMessage.error({
+            message: 'Reset fail',
+          })
+        }
+      } else {
+        done()
+      }
+    }
+  }).then((action) => {
+
   })
 }
 </script>

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "types": ["vite/client"],
+    "module": "esnext",
+    "moduleResolution":"node",
+    "target": "es2015"
+    
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "axios"
+  ],
+  "include": [
+    "./src/**/*"
+  ]
+}

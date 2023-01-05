@@ -9,14 +9,24 @@ const router = createRouter({
         {
             path: '/login',
             name: 'login',
+            meta: {
+                isLogin: true,
+                isAdmin: false,
+            },
             component: () => import(/* webpackChunkName: "login" */ '../views/login/index.vue')
         },
         {
-            path: '/users',
+            path: '/usersList',
             name: 'AfterSales',
-            component: () => import(/*webapckChunkName: 'AfterSales' */'../views/users/index.vue')
+            meta: {
+                isLogin: true,
+                isAdmin: false,
+            },
+            component: () => import(/*webapckChunkName: 'AfterSales' */'../views/usersList/index.vue')
         }
     ]
 })
-
+router.beforeEach((to, from) => {
+    
+})
 export default router
